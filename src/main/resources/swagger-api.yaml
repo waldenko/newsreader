@@ -1,0 +1,90 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Newsreader
+  description: Przelotka do newsapi.org
+  license:
+    name: Apache License 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.txt
+host: 127.0.0.1:8080
+basePath: /newsreader
+schemes:
+  - http
+tags:
+  - name: news
+    description: Usługi pobierania wiadomości
+paths:
+  /news/{lang}/{category}:
+    get:
+      operationId: listArticle
+      tags:
+       - news
+      summary: Pobierz listę wiadomości
+      produces:
+        - application/json
+      parameters:
+      - description: Kod języka
+        in: path
+        name: lang
+        required: true
+        type: string
+      - description: Kod kategorii
+        in: path
+        name: category
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Lista wiadomości
+          schema:
+            $ref: '#/definitions/ArticleList'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Article:
+    required:
+      - author
+      - title
+      - description
+      - date
+      - sourceName
+      - articleUrl
+    properties:
+      author:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      date:
+        type: string
+      sourceName:
+        type: string
+      articleUrl:
+        type: string
+      imageUrl:
+        type: string
+  ArticleList:
+    required:
+      - country
+      - category
+    properties:
+      country:
+        type: string
+      category:
+        type: string
+      articles:
+        type: array
+        items:
+          $ref: '#/definitions/Article'
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
