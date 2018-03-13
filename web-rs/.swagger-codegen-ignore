@@ -23,5 +23,8 @@
 #!docs/README.md
 
 src/main/java/**/*ApiController.java
+src/main/java/**/RFC3339DateFormat.java
+src/main/java/**/Swagger2SpringBoot.java
+src/main/resources/application.properties
 README.md
 pom.xml

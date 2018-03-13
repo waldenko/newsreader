@@ -60,6 +60,7 @@ definitions:
         type: string
       date:
         type: string
+        format: date
       sourceName:
         type: string
       articleUrl:
