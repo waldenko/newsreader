@@ -1,0 +1,6 @@
+rootProject.name = 'newsreader'
+
+include ':model'
+include ':service'
+include ':adapter-newsapi'
+include ':web-rs'
