@@ -4,7 +4,7 @@ import org.gradle.api.Project
 
 class SwaggerTasks {
     static void addTasks(Project project) {
-        project.task('generateServerStub', { group = 'generator' }) << {
+        project.task('generateServerStub', { group = 'generator' }).doLast {
             generateServerStub(project.rootDir.path, 'web-rs')
         }
     }
