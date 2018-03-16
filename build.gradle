@@ -1,5 +1,8 @@
 buildscript {
 	ext {
+        groovyVersion = '2.4.14'
+        groovyHttpBuilderVersion = '0.7.1'
+        jsr305Version = '3.0.2'
         lombokVersion = '1.16.20'
         spockVersion = '1.1-groovy-2.4'
 		springBootVersion = '2.0.0.RELEASE'
@@ -14,7 +17,7 @@ buildscript {
 	}
 }
 
-configure(allprojects) { project ->
+configure(allprojects) {
     apply plugin: 'java'
     apply plugin: 'idea'
 
@@ -27,7 +30,11 @@ configure(allprojects) { project ->
     }
 
     dependencies {
-        compile "org.springframework:spring-context:$springVersion"
+        if (project.name != 'model') {
+            compile "org.springframework:spring-context:$springVersion"
+            compile project(':model')
+        }
+        compile "com.google.code.findbugs:jsr305:$jsr305Version"
         compileOnly "org.projectlombok:lombok:$lombokVersion"
     }
 }
@@ -36,10 +43,25 @@ project('web-rs') {
     apply plugin: 'org.springframework.boot'
 
     dependencies {
+        compile project(':service')
         compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
         compile "io.springfox:springfox-swagger2:$swaggerVersion"
         compile "io.springfox:springfox-swagger-ui:$swaggerVersion"
         testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    }
+}
+
+project('test-rs') {
+    apply plugin: 'groovy'
+    sourceSets {
+        integrationTest {
+            groovy.srcDir 'src/integration/groovy'
+        }
+    }
+    dependencies {
+        integrationTestCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
+        integrationTestCompile "org.codehaus.groovy.modules.http-builder:http-builder:$groovyHttpBuilderVersion"
+        integrationTestCompile "org.spockframework:spock-core:$spockVersion"
     }
 }
 
