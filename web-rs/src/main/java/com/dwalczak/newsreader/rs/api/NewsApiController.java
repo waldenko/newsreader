@@ -1,18 +1,24 @@
 package com.dwalczak.newsreader.rs.api;
 
-import com.dwalczak.newsreader.rs.api.NewsApi;
-import com.dwalczak.newsreader.rs.model.Article;
+import com.dwalczak.newsreader.rs.mapper.ArticleFilterMapper;
+import com.dwalczak.newsreader.rs.mapper.ArticleMapper;
 import com.dwalczak.newsreader.rs.model.ArticleList;
+import com.dwalczak.newsreader.service.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class NewsApiController implements NewsApi {
+
+    @Autowired private NewsService newsService;
 
     private final ObjectMapper objectMapper;
 
@@ -35,19 +41,12 @@ public class NewsApiController implements NewsApi {
     }
 
     @Override
-    public ResponseEntity<ArticleList> listArticle(String lang, String category) {
+    public ResponseEntity<ArticleList> listArticle(@ApiParam(value = "Kod języka",required=true) @PathVariable("lang") String lang, @ApiParam(value = "Kod kategorii",required=true) @PathVariable("category") String category) {
+        com.dwalczak.newsreader.model.ArticleList articles = newsService.findArticles(ArticleFilterMapper.map(lang, category));
         ArticleList result = new ArticleList();
         result.setCategory(category);
         result.setCountry("Polska");
-        result.setArticles(Collections.singletonList(new Article()
-                .articleUrl("url")
-                .author("Autor")
-                .date(LocalDate.now().minusDays(2))
-                .description("Opis")
-                .sourceName("Wydawca")
-                .title("Artykuł")
-                .imageUrl("Obrazek")
-        ));
+        result.setArticles(articles.getTotaCount() > 0 ? articles.getArticles().stream().map(ArticleMapper::map).collect(Collectors.toList()) : null);
         return ResponseEntity.ok(result);
     }
 }
