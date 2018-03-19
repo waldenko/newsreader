@@ -1,29 +1,26 @@
 buildscript {
 	ext {
+        commonsIoVersion = "2.6"
         groovyVersion = '2.4.14'
         groovyHttpBuilderVersion = '0.7.1'
         jsr305Version = '3.0.2'
-        lombokVersion = '1.16.20'
         spockVersion = '1.1-groovy-2.4'
 		springBootVersion = '2.0.0.RELEASE'
-		springVersion = '5.0.4.RELEASE'
         swaggerVersion = "2.6.1"
     }
 	repositories {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
 	}
 }
 
 configure(allprojects) {
-    apply plugin: 'java'
     apply plugin: 'idea'
 
     group 'com.dwalczak'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = 1.8
 
     repositories {
         mavenCentral()
@@ -31,20 +28,32 @@ configure(allprojects) {
 }
 
 subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.8
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+        }
+    }
     dependencies {
         if (project.name != 'model') {
-            compile "org.springframework:spring-context:$springVersion"
+            compile "org.springframework:spring-context"
+            compile "ch.qos.logback:logback-classic"
             compile project(':model')
         }
         compile "com.google.code.findbugs:jsr305:$jsr305Version"
-        compileOnly "org.projectlombok:lombok:$lombokVersion"
+        compileOnly "org.projectlombok:lombok"
     }
 }
 
 
 project('adapter-newsapi') {
     dependencies {
-        compile "org.springframework:spring-web:$springVersion"
+        compile "org.springframework:spring-web"
+        compile "commons-io:commons-io:$commonsIoVersion"
     }
 }
 
@@ -59,10 +68,10 @@ project('web-rs') {
 
     dependencies {
         compile project(':service')
-        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        compile "org.springframework.boot:spring-boot-starter-web"
         compile "io.springfox:springfox-swagger2:$swaggerVersion"
         compile "io.springfox:springfox-swagger-ui:$swaggerVersion"
-        testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+        testCompile "org.springframework.boot:spring-boot-starter-test"
     }
 }
 
