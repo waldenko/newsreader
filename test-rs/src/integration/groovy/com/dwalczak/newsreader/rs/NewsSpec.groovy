@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class NewsSpec extends Specification {
 
-    @Shared def client = new RESTClient('http://127.0.0.1:8080/')
+    @Shared def client = getRestClient('http://127.0.0.1:8080/')
 
     def "check fields"() {
         when:
@@ -33,7 +33,13 @@ class NewsSpec extends Specification {
     def doGet(def path) {
         println "HTTP REQUEST: ${client.uri}$path"
         def resp = client.get(path: path)
-        println "HTTP RESULT $resp.status [$resp.allHeaders] $resp.data}"
+        println "HTTP RESULT $resp.status [$resp.allHeaders] $resp.data"
         resp
+    }
+
+    def getRestClient(def uri) {
+        def client = new RESTClient(uri)
+        client.handler.failure = client.handler.success
+        client
     }
 }
