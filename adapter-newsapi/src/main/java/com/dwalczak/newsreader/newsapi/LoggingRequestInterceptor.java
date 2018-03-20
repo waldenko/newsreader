@@ -33,7 +33,7 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
         try {
             body = IOUtils.toString(response.getBody(), CHARSET);
         } catch (Exception e) {
-            log.error("Can't read message body", e);
+            log.warn("Can't read message body", e);
         }
         newsapiLog.info(formatLogParams(Arrays.asList(response.getStatusCode())) + " " + body);
     }
