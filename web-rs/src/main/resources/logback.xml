@@ -9,6 +9,10 @@
         </encoder>
     </appender>
 
+    <logger name="api" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
     <logger name="newsapi" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
