@@ -51,14 +51,14 @@ public interface NewsApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Lista wiadomości", response = ArticleList.class),
         @ApiResponse(code = 200, message = "unexpected error", response = Error.class) })
-    @RequestMapping(value = "/news/{lang}/{category}",
+    @RequestMapping(value = "/news/{country}/{category}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<ArticleList> listArticle(@ApiParam(value = "Kod języka",required=true) @PathVariable("lang") String lang,@ApiParam(value = "Kod kategorii",required=true) @PathVariable("category") String category) {
+    default ResponseEntity<ArticleList> listArticle(@ApiParam(value = "Kod kraju",required=true) @PathVariable("country") String country,@ApiParam(value = "Kod kategorii",required=true) @PathVariable("category") String category,@ApiParam(value = "Nr strony (domyślna wartość 1)") @Valid @RequestParam(value = "pageNumber", required = false) Integer pageNumber,@ApiParam(value = "Rozmiar strony (domyślna wartość 10)") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,@ApiParam(value = "Szukany tekst w artykułach") @Valid @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
-                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"country\" : \"country\",  \"category\" : \"category\",  \"articles\" : [ {    \"date\" : \"2000-01-23\",    \"author\" : \"author\",    \"imageUrl\" : \"imageUrl\",    \"description\" : \"description\",    \"sourceName\" : \"sourceName\",    \"title\" : \"title\",    \"articleUrl\" : \"articleUrl\"  }, {    \"date\" : \"2000-01-23\",    \"author\" : \"author\",    \"imageUrl\" : \"imageUrl\",    \"description\" : \"description\",    \"sourceName\" : \"sourceName\",    \"title\" : \"title\",    \"articleUrl\" : \"articleUrl\"  } ]}", ArticleList.class), HttpStatus.NOT_IMPLEMENTED);
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"country\" : \"country\",  \"totaCount\" : 0,  \"category\" : \"category\",  \"articles\" : [ {    \"date\" : \"2000-01-23\",    \"author\" : \"author\",    \"imageUrl\" : \"imageUrl\",    \"description\" : \"description\",    \"sourceName\" : \"sourceName\",    \"title\" : \"title\",    \"articleUrl\" : \"articleUrl\"  }, {    \"date\" : \"2000-01-23\",    \"author\" : \"author\",    \"imageUrl\" : \"imageUrl\",    \"description\" : \"description\",    \"sourceName\" : \"sourceName\",    \"title\" : \"title\",    \"articleUrl\" : \"articleUrl\"  } ]}", ArticleList.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -46,8 +46,7 @@ public class Article   {
    * Get author
    * @return author
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getAuthor() {
@@ -88,8 +87,7 @@ public class Article   {
    * Get description
    * @return description
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getDescription() {

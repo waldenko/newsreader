@@ -14,7 +14,7 @@ tags:
   - name: news
     description: Usługi pobierania wiadomości
 paths:
-  /news/{lang}/{category}:
+  /news/{country}/{category}:
     get:
       operationId: listArticle
       tags:
@@ -23,15 +23,30 @@ paths:
       produces:
         - application/json
       parameters:
-      - description: Kod języka
+      - name: country
         in: path
-        name: lang
+        description: Kod kraju
         required: true
         type: string
-      - description: Kod kategorii
+      - name: category
         in: path
-        name: category
+        description: Kod kategorii
         required: true
+        type: string
+      - name: pageNumber
+        in: query
+        description: Nr strony (domyślna wartość 1)
+        required: false
+        type: integer
+      - name: pageSize
+        in: query
+        description: Rozmiar strony (domyślna wartość 10)
+        required: false
+        type: integer
+      - name: searchPhrase
+        in: query
+        description: Szukany tekst w artykułach
+        required: false
         type: string
       responses:
         "200":
@@ -45,9 +60,7 @@ paths:
 definitions:
   Article:
     required:
-      - author
       - title
-      - description
       - date
       - sourceName
       - articleUrl
@@ -80,6 +93,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Article'
+      totaCount:
+        type: integer
   Error:
     required:
       - code

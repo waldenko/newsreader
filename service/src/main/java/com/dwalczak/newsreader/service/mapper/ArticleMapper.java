@@ -1,10 +1,11 @@
-package com.dwalczak.newsreader.service;
+package com.dwalczak.newsreader.service.mapper;
 
 import com.dwalczak.newsreader.model.Article;
 import com.dwalczak.newsreader.model.ArticleList;
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticle;
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticlesResult;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,9 +15,14 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Transformacja DTO między warstwą integracyjną newsapi.org a warstwą usługową
+ */
 @ParametersAreNonnullByDefault
 public class ArticleMapper {
     private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+    @Nonnull
     public static ArticleList map(NewsApiArticlesResult articles) {
         return new ArticleList()
                 .setTotaCount(requireNonNull(articles.getTotalResults()))
@@ -26,6 +32,7 @@ public class ArticleMapper {
                 ;
     }
 
+    @Nonnull
     private static Article map(NewsApiArticle article) {
         return new Article()
                 .setArticleUrl(requireNonNull(article.getUrl(), "getUrl"))
@@ -38,6 +45,7 @@ public class ArticleMapper {
                 ;
     }
 
+    @Nonnull
     private static Date map2Date(String date) {
         try {
             return SDF.parse(date);
