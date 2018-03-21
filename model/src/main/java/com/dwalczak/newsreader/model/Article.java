@@ -10,9 +10,9 @@ import java.util.Date;
 
 @Data @Accessors(chain = true) @NoArgsConstructor
 public class Article {
-    @Nonnull private String author;
+    @Nullable private String author;
     @Nonnull private String title;
-    @Nonnull private String description;
+    @Nullable private String description;
     @Nonnull private Date date;
     @Nonnull private String sourceName;
     @Nonnull private String articleUrl;
