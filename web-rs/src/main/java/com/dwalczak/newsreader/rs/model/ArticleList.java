@@ -28,8 +28,8 @@ public class ArticleList   {
   @Valid
   private List<Article> articles = null;
 
-  @JsonProperty("totaCount")
-  private Integer totaCount = null;
+  @JsonProperty("totalCount")
+  private Integer totalCount = null;
 
   public ArticleList country(String country) {
     this.country = country;
@@ -102,24 +102,24 @@ public class ArticleList   {
     this.articles = articles;
   }
 
-  public ArticleList totaCount(Integer totaCount) {
-    this.totaCount = totaCount;
+  public ArticleList totalCount(Integer totalCount) {
+    this.totalCount = totalCount;
     return this;
   }
 
   /**
-   * Get totaCount
-   * @return totaCount
+   * Get totalCount
+   * @return totalCount
   **/
   @ApiModelProperty(value = "")
 
 
-  public Integer getTotaCount() {
-    return totaCount;
+  public Integer getTotalCount() {
+    return totalCount;
   }
 
-  public void setTotaCount(Integer totaCount) {
-    this.totaCount = totaCount;
+  public void setTotalCount(Integer totalCount) {
+    this.totalCount = totalCount;
   }
 
 
@@ -135,12 +135,12 @@ public class ArticleList   {
     return Objects.equals(this.country, articleList.country) &&
         Objects.equals(this.category, articleList.category) &&
         Objects.equals(this.articles, articleList.articles) &&
-        Objects.equals(this.totaCount, articleList.totaCount);
+        Objects.equals(this.totalCount, articleList.totalCount);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(country, category, articles, totaCount);
+    return Objects.hash(country, category, articles, totalCount);
   }
 
   @Override
@@ -151,7 +151,7 @@ public class ArticleList   {
     sb.append("    country: ").append(toIndentedString(country)).append("\n");
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    articles: ").append(toIndentedString(articles)).append("\n");
-    sb.append("    totaCount: ").append(toIndentedString(totaCount)).append("\n");
+    sb.append("    totalCount: ").append(toIndentedString(totalCount)).append("\n");
     sb.append("}");
     return sb.toString();
   }

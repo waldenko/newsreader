@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -20,8 +21,8 @@ public class ArticleMapper {
         return new ArticleList()
                 .category(category)
                 .country(country)
-                .articles(list.getTotaCount() > 0 ? list.getArticles().stream().map(ArticleMapper::map).collect(Collectors.toList()) : null)
-                .totaCount(list.getTotaCount());
+                .articles(list.getTotalCount() > 0 ? list.getArticles().stream().map(ArticleMapper::map).collect(Collectors.toList()) : Collections.emptyList())
+                .totalCount(list.getTotalCount());
     }
 
     @Nonnull
@@ -29,7 +30,7 @@ public class ArticleMapper {
         return new Article()
                 .articleUrl(article.getArticleUrl())
                 .author(article.getAuthor())
-                .date(Instant.ofEpochMilli(article.getDate().getTime()).atZone(ZoneOffset.UTC).toLocalDate())
+                .date(Instant.ofEpochMilli(article.getDate().getTime()).atZone(ZoneOffset.systemDefault()).toLocalDate())
                 .description(article.getDescription())
                 .sourceName(article.getSourceName())
                 .title(article.getTitle())

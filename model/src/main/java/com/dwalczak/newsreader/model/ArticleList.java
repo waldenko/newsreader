@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 @Accessors(chain = true) @NoArgsConstructor
 public class ArticleList {
-    @Nonnull private Integer totaCount;
+    @Nonnull private Integer totalCount;
     @Nonnull private List<Article> articles;
 }

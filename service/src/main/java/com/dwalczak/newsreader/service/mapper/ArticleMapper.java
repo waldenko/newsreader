@@ -25,7 +25,7 @@ public class ArticleMapper {
     @Nonnull
     public static ArticleList map(NewsApiArticlesResult articles) {
         return new ArticleList()
-                .setTotaCount(requireNonNull(articles.getTotalResults()))
+                .setTotalCount(requireNonNull(articles.getTotalResults()))
                 .setArticles(articles.getArticles() != null
                         ? articles.getArticles().stream().map(ArticleMapper::map).collect(Collectors.toList())
                         : Collections.emptyList())
