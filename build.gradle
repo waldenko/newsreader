@@ -29,6 +29,7 @@ configure(allprojects) {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'groovy'
     apply plugin: 'io.spring.dependency-management'
 
     sourceCompatibility = 1.8
@@ -46,6 +47,7 @@ subprojects {
         }
         compile "com.google.code.findbugs:jsr305:$jsr305Version"
         compileOnly "org.projectlombok:lombok"
+        testCompile "org.spockframework:spock-core:$spockVersion"
     }
 }
 
