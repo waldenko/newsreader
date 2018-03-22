@@ -7,7 +7,6 @@ import spock.lang.Unroll
 
 class ArticleFilterMapperSpec extends Specification {
 
-
     @Unroll
     def "check filter mapping: #srcDto"() {
         given:
