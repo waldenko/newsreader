@@ -75,6 +75,15 @@ project('web-rs') {
         compile "io.springfox:springfox-swagger-ui:$swaggerVersion"
         testCompile "org.springframework.boot:spring-boot-starter-test"
     }
+
+    test {
+        environment 'newsapi_org_api_key', Utils.getSystemProperty('newsapi_org_api_key')
+    }
+
+    bootRun {
+        environment 'newsapi_org_api_key', Utils.getSystemProperty('newsapi_org_api_key')
+    }
+
 }
 
 project('test-rs') {
@@ -92,3 +101,4 @@ project('test-rs') {
 }
 
 SwaggerTasks.addTasks(project)
+DockerTasks.addTasks(project)
