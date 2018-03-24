@@ -77,11 +77,13 @@ project('web-rs') {
     }
 
     test {
-        environment 'newsapi_org_api_key', Utils.getSystemProperty('newsapi_org_api_key')
+        environment 'newsapi_org_api_key', 'FAKE_API_KEY'
     }
 
     bootRun {
-        environment 'newsapi_org_api_key', Utils.getSystemProperty('newsapi_org_api_key')
+        doFirst {
+            environment 'newsapi_org_api_key', Utils.getSystemProperty('newsapi_org_api_key')
+        }
     }
 
 }
@@ -93,10 +95,22 @@ project('test-rs') {
             groovy.srcDir 'src/integration/groovy'
         }
     }
+    configurations {
+        integrationTestCompile.extendsFrom testCompile
+        integrationTestRuntime.extendsFrom testRuntime
+    }
     dependencies {
         integrationTestCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
         integrationTestCompile "org.codehaus.groovy.modules.http-builder:http-builder:$groovyHttpBuilderVersion"
         integrationTestCompile "org.spockframework:spock-core:$spockVersion"
+    }
+    task integrationTest(type: Test) {
+        description = "Runs integrations tests. "
+        tasks.integrationTest.setGroup('Verification')
+        testClassesDirs = sourceSets.integrationTest.output.getClassesDirs()
+        classpath = sourceSets.integrationTest.runtimeClasspath
+        // always run no cache
+        outputs.upToDateWhen { false }
     }
 }
 

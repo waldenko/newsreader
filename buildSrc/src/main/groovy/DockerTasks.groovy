@@ -14,8 +14,8 @@ class DockerTasks {
         project.task('dockerBuildImage', { group = 'docker'; dependsOn = ['dockerRemoveImage', ':web-rs:build'] }).doLast {
             buildImage(project)
         }
-        project.task('dockerBootRun', { group = 'docker'; dependsOn = ['dockerBuildImage'] }).doLast {
-            Utils.run("docker run --name $IMAGE -p 8080:8080 -e newsapi_org_api_key=${Utils.getSystemProperty('newsapi_org_api_key')} $IMAGE")
+        project.task('dockerRun', { group = 'docker'; dependsOn = ['dockerBuildImage'] }).doLast {
+            Utils.run("docker run -d --name $IMAGE -p 8080:8080 -e newsapi_org_api_key=${Utils.getSystemProperty('newsapi_org_api_key')} $IMAGE")
         }
     }
 
