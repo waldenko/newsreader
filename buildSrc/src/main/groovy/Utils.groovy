@@ -5,13 +5,14 @@ class Utils {
 
     static def run(String cmd, Map params = [:]) {
         def t1 = System.currentTimeMillis()
-        println "# " + cmd
+        BufferedOutputStream out = new BufferedOutputStream(System.out)
+        out << "# $cmd\n"
         def process = params.workingDirectory == null ? cmd.execute() : cmd.execute([], params.workingDirectory)
-        process.waitForProcessOutput(System.out, System.err)
+        process.waitForProcessOutput(out, out)
         if (process.exitValue() != 0 && !params.ignoreFailed) {
             throw new GradleException("Failed!")
         }
-        println " ... done in ${System.currentTimeMillis() - t1} ms"
+        out << " ... done in ${System.currentTimeMillis() - t1} ms\n"
     }
 
     static String getSystemProperty(String property) {
