@@ -17,6 +17,7 @@ class NewsSpec extends Specification {
         resp.status == 200
         resp.data.country == 'pl'
         resp.data.category == 'technology'
+        resp.data.totalCount != null
         resp.data.articles?.size > 0
         resp.data.articles[0].title != null
         resp.data.articles[0].date != null
@@ -78,22 +79,17 @@ class NewsSpec extends Specification {
 
         then:
         r1.status == 200
-        r1.data.totaCount > 0
+        r1.data.totalCount > 0
 
         when:
         int pageSize = 3
-        int lastPageSize = r1.data.totaCount % pageSize
-        int lastPageNumber = (int) (r1.data.totaCount / pageSize) + (lastPageSize == 0 ? 0 : 1)
-        if (lastPageSize == 0) {
-            lastPageSize = pageSize
-        } else {
-            ++lastPageNumber
-        }
+        int lastPageSize = r1.data.totalCount % pageSize
+        int lastPageNumber = (int) (r1.data.totalCount / pageSize) + (lastPageSize == 0 ? 0 : 1)
         def r2 = getNews(pageSize: pageSize, pageNumber: lastPageNumber)
         then:
         r2.status == 200
-        r2.data.totaCount == r1.data.totaCount
-        r2.data.articles.size == lastPageSize
+        r2.data.totalCount == r1.data.totalCount
+        r2.data.articles.size == (lastPageSize == 0 ? pageSize : lastPageSize)
     }
 
     def getNews(Map params = [:]) {
