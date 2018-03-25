@@ -6,7 +6,11 @@
 * Uruchomienie testów integracyjnych (SpringBoot)
 ```./gradlew integrationTest```
 
-# docker
+# Dokumentacja usług
+Po uruchomieniu projektu należy w przeglądarce wejść:
+http://localhost:8080/swagger-ui.html
+
+# Docker
 Obraz i kontener mają nazwę newsreader-dwalczak
 * Utworzenie obrazu docker
 ```./gradlew dockerBuildImage```
@@ -39,3 +43,6 @@ Zawiera implementację komunikacji z serwisem newsapi.org.
 
 ## model
 Zawiera klasy modelu danych. 
+
+## frontend
+Zawiera frontend (angular)
