@@ -1,9 +1,25 @@
 # Budowanie, uruchomienie i testowanie
+
 * Budowanie i testy jednostkowe
+
 ```./gradlew build```
-* Uruchomienie (SpringBoot)
+
+* Uruchomienie SpringBoot
+
 ```./gradlew bootRun -Dnewsapi_org_api_key=API_KEY```
+
+Aby (z uruchomionym SpringBoot'em) był podmieniany dynamicznie kod frontend'u należy także uruchomić:
+
+```./gradlew buildClientWatch```
+
+Aby przeglądarka zaczytała zmiany należy odświeżyć stronę.
+
+* Uruchomienie SpringBoot (bez generowania frontend'u)
+
+```./gradlew bootRun -Dnewsapi_org_api_key=API_KEY -PdisableFrontendDev```
+
 * Uruchomienie testów integracyjnych (SpringBoot)
+
 ```./gradlew integrationTest```
 
 # Dokumentacja usług
@@ -21,6 +37,7 @@ Obraz i kontener mają nazwę newsreader-dwalczak
 * Usunięcie obrazu docker
 ```./gradlew dockerRemoveImage```
 
+
 # Podział kodów
 
 ## . (Projekt główny)
@@ -32,6 +49,10 @@ Zawiera:
 Warstwa usług REST
 Zawiera punkty wejścia usług.
 Stub kodów serwera wygenerowany przez swagger.
+Nie wprowadzamy zmian w kodach generowanych:
+* com.dwalczak.newsreader.rs.model.* 
+* com.dwalczak.newsreader.rs.configuration.SwaggerDocumentationConfig
+* com.dwalczak.newsreader.rs.api.* (z wyjątkiem *ApiController.java)
 
 ## service
 Warstwa usług
