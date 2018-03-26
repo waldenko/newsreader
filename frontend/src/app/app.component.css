@@ -1,0 +1,30 @@
+.article-list {
+  list-style-type: none;
+}
+.article-item {
+  width: 80%;
+  border-bottom: 2px darkgray solid;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.article-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.article-description {
+  padding-left: 10px;
+}
+.article-description img {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  display: block;
+}
+.article-footer {
+  font-size: 0.8em;
+  text-align: right;
+}
+.button-load {
+  width: 70%;
+  text-align: right;
+}
