@@ -91,7 +91,10 @@ project('web-rs') {
     }
 
     bootRun {
-        dependsOn ':frontend:buildClientDev'
+        if (!project.hasProperty('disableFrontendDev')) {
+            dependsOn ':frontend:buildClientDev'
+            sourceResources sourceSets.main
+        }
         doFirst {
             environment 'newsapi_org_api_key', Utils.getSystemProperty('newsapi_org_api_key')
         }
