@@ -35,7 +35,7 @@ public class RestLoggingFilter extends OncePerRequestFilter {
     private void traceReq(BufferedRequestWrapper request) {
         apiLog.info(formatLogParams(Arrays.asList(
                 request.getMethod(),
-                request.getRequestURI() + (request.getQueryString().length() > 0 ? "?" + request.getQueryString() : "")))
+                request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "")))
                 + " " + request.getRequestBody())
         ;
     }
