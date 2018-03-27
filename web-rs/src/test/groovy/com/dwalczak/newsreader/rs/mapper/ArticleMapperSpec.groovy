@@ -1,5 +1,7 @@
 package com.dwalczak.newsreader.rs.mapper
 
+import com.dwalczak.newsreader.service.dto.Article
+import com.dwalczak.newsreader.service.dto.ArticleList
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -17,7 +19,7 @@ class ArticleMapperSpec extends Specification {
         def dstDto = [country: 'x1', category: 'x2', totalCount: dstArticles.size(), articles: dstArticles]
 
         when:
-        def result = ArticleMapper.map(dstDto.country, dstDto.category, new com.dwalczak.newsreader.model.ArticleList(srcDto))
+        def result = ArticleMapper.map(dstDto.country, dstDto.category, new ArticleList(srcDto))
 
         then:
         result.toString() == new com.dwalczak.newsreader.rs.model.ArticleList(dstDto).toString()
@@ -29,7 +31,7 @@ class ArticleMapperSpec extends Specification {
     }
 
     def static srcArticle(def author, def articleUrl, def title, def description, def sourceName, def imageUrl, def date) {
-        new com.dwalczak.newsreader.model.Article(
+        new Article(
                 author: author,
                 articleUrl: articleUrl,
                 title: title,

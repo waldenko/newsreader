@@ -71,6 +71,7 @@ project('adapter-newsapi') {
 project('service') {
     dependencies {
         compile project(':adapter-newsapi')
+        compile 'javax.validation:validation-api'
     }
 }
 

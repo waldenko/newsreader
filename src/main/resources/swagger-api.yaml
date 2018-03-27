@@ -97,10 +97,23 @@ definitions:
         type: integer
   Error:
     required:
-      - code
+      - errorCode
       - message
     properties:
-      code:
+      errorCode:
+        type: string
+      message:
+        type: string
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/FieldError'
+  FieldError:
+    required:
+      - field
+      - message
+    properties:
+      field:
         type: string
       message:
         type: string

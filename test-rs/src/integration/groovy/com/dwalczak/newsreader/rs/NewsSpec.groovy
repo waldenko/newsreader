@@ -1,13 +1,11 @@
 package com.dwalczak.newsreader.rs
 
-import groovyx.net.http.RESTClient
-import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class NewsSpec extends Specification {
+import static com.dwalczak.newsreader.rs.NewsClient.getNews
 
-    @Shared def client = getRestClient('http://127.0.0.1:8080/')
+class NewsSpec extends Specification {
 
     def "check fields"() {
         when:
@@ -24,24 +22,6 @@ class NewsSpec extends Specification {
         resp.data.articles[0].date ==~ /\d{4}-\d{2}-\d{2}/
         resp.data.articles[0].sourceName != null
         resp.data.articles[0].articleUrl != null
-    }
-
-    @Unroll
-    def "check base filter #country, #category"() {
-        when:
-        def resp = getNews(country: country, category: category)
-
-        then:
-        resp.status == 200
-        resp.data.country == country
-        resp.data.category == category
-        resp.data.articles?.size > 0
-
-        where:
-        country | category
-        'pl'    | 'business'
-        'pl'    | 'technology'
-        'de'    | 'technology'
     }
 
     @Unroll
@@ -90,26 +70,5 @@ class NewsSpec extends Specification {
         r2.status == 200
         r2.data.totalCount == r1.data.totalCount
         r2.data.articles.size == (lastPageSize == 0 ? pageSize : lastPageSize)
-    }
-
-    def getNews(Map params = [:]) {
-        def country = params.country ?: 'pl'
-        def category = params.category ?: 'technology'
-        params.remove('country')
-        params.remove('category')
-        doGet("news/$country/$category", params)
-    }
-
-    def doGet(def path, Map query) {
-        println "HTTP REQUEST: ${client.uri}$path"
-        def resp = client.get(path: path, query: query)
-        println "HTTP RESULT $resp.status [$resp.allHeaders] $resp.data"
-        resp
-    }
-
-    def getRestClient(def uri) {
-        def client = new RESTClient(uri)
-        client.handler.failure = client.handler.success
-        client
     }
 }
