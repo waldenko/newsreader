@@ -1,7 +1,7 @@
 package com.dwalczak.newsreader.service;
 
-import com.dwalczak.newsreader.model.ArticleFilter;
-import com.dwalczak.newsreader.model.ArticleList;
+import com.dwalczak.newsreader.service.dto.ArticleFilter;
+import com.dwalczak.newsreader.service.dto.ArticleList;
 import com.dwalczak.newsreader.newsapi.NewsapiClient;
 import com.dwalczak.newsreader.newsapi.NewsapiException;
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticlesResult;

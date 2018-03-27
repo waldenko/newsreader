@@ -1,8 +1,8 @@
 package com.dwalczak.newsreader;
 
 import com.dwalczak.newsreader.newsapi.NewsapiException;
-import com.dwalczak.newsreader.rs.model.Error;
-import com.dwalczak.newsreader.rs.model.FieldError;
+import com.dwalczak.newsreader.rs.dto.Error;
+import com.dwalczak.newsreader.rs.dto.FieldError;
 import com.dwalczak.newsreader.service.NewsServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

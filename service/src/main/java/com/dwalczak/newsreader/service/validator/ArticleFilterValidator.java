@@ -1,6 +1,6 @@
 package com.dwalczak.newsreader.service.validator;
 
-import com.dwalczak.newsreader.model.ArticleFilter;
+import com.dwalczak.newsreader.service.dto.ArticleFilter;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

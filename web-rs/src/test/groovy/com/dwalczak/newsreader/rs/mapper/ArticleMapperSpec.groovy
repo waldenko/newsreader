@@ -22,7 +22,7 @@ class ArticleMapperSpec extends Specification {
         def result = ArticleMapper.map(dstDto.country, dstDto.category, new ArticleList(srcDto))
 
         then:
-        result.toString() == new com.dwalczak.newsreader.rs.model.ArticleList(dstDto).toString()
+        result.toString() == new com.dwalczak.newsreader.rs.dto.ArticleList(dstDto).toString()
 
         where:
         srcArticles                                                    | dstArticles
@@ -41,7 +41,7 @@ class ArticleMapperSpec extends Specification {
                 date: SDF.parse(date))
     }
     def static dstArticle(def author, def articleUrl, def title, def description, def sourceName, def imageUrl, int dateYear, int dateMonth, int dateDayOfMonth) {
-        new com.dwalczak.newsreader.rs.model.Article(
+        new com.dwalczak.newsreader.rs.dto.Article(
                 author: author,
                 articleUrl: articleUrl,
                 title: title,

@@ -20,7 +20,7 @@ class SwaggerTasks {
                 "basePackage": 'com.dwalczak.newsreader.rs',
                 "apiPackage": 'com.dwalczak.newsreader.rs.api',
                 "configPackage": 'com.dwalczak.newsreader.rs.configuration',
-                "modelPackage": 'com.dwalczak.newsreader.rs.model',
+                "modelPackage": 'com.dwalczak.newsreader.rs.dto',
                 "hideGenerationTimestamp": true,
                 "useTags": true,
                 "sourceFolder": "src/main/java",

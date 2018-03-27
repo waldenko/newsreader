@@ -1,4 +1,4 @@
-package com.dwalczak.newsreader.model;
+package com.dwalczak.newsreader.service.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

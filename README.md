@@ -8,11 +8,13 @@
 
 ```./gradlew bootRun -Dnewsapi_org_api_key=API_KEY```
 
+W przeglądarce wejść na stronę: http://localhost:8080
+
 Aby (z uruchomionym SpringBoot'em) był podmieniany dynamicznie kod frontend'u należy także uruchomić:
 
 ```./gradlew buildClientWatch```
 
-Aby przeglądarka zaczytała zmiany należy odświeżyć stronę.
+Wówcza, żeby przeglądarka zaczytała zmiany należy odświeżyć stronę.
 
 * Uruchomienie SpringBoot (bez generowania frontend'u)
 
@@ -46,24 +48,22 @@ Zawiera:
 * definicję obrazu docker
 
 ## web-rs
-Warstwa usług REST
-Zawiera punkty wejścia usług.
+Moduł WEB.
+Zawiera punkty wejścia usług REST oraz pliki zbudowanego frontend'u angular.
+
 Stub kodów serwera wygenerowany przez swagger.
 Nie wprowadzamy zmian w kodach generowanych:
-* com.dwalczak.newsreader.rs.model.* 
+* com.dwalczak.newsreader.rs.dto.* 
 * com.dwalczak.newsreader.rs.configuration.SwaggerDocumentationConfig
 * com.dwalczak.newsreader.rs.api.* (z wyjątkiem *ApiController.java)
 
 ## service
-Warstwa usług
+Moduł usług
 Zawiera "właściwą" implementację usług.
 
 ## adapter-newsapi
-Warstwa integracyjna z newsapi.org.
+Moduł integracji z newsapi.org.
 Zawiera implementację komunikacji z serwisem newsapi.org.
 
-## model
-Zawiera klasy modelu danych. 
-
 ## frontend
-Zawiera frontend (angular)
+Zawiera kody źródłowe frontend'u w technologii angular

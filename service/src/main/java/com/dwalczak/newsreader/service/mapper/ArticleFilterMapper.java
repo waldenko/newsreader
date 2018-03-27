@@ -1,6 +1,6 @@
 package com.dwalczak.newsreader.service.mapper;
 
-import com.dwalczak.newsreader.model.ArticleFilter;
+import com.dwalczak.newsreader.service.dto.ArticleFilter;
 import com.dwalczak.newsreader.newsapi.dto.NewsApiTopHeadlinesRequest;
 
 import javax.annotation.Nonnull;

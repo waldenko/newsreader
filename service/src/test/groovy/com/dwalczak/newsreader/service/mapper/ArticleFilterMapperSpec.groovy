@@ -1,7 +1,7 @@
 package com.dwalczak.newsreader.service.mapper
 
-import com.dwalczak.newsreader.model.ArticleFilter
-import com.dwalczak.newsreader.model.PaginationFilter
+import com.dwalczak.newsreader.service.dto.ArticleFilter
+import com.dwalczak.newsreader.service.dto.PaginationFilter
 import com.dwalczak.newsreader.newsapi.dto.NewsApiTopHeadlinesRequest
 import spock.lang.Specification
 

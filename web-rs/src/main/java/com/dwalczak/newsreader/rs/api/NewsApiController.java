@@ -2,7 +2,7 @@ package com.dwalczak.newsreader.rs.api;
 
 import com.dwalczak.newsreader.rs.mapper.ArticleFilterMapper;
 import com.dwalczak.newsreader.rs.mapper.ArticleMapper;
-import com.dwalczak.newsreader.rs.model.ArticleList;
+import com.dwalczak.newsreader.rs.dto.ArticleList;
 import com.dwalczak.newsreader.service.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
@@ -48,7 +48,7 @@ public class NewsApiController implements NewsApi {
             @ApiParam(value = "Nr strony (domyślna wartość 1)") @Valid @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
             @ApiParam(value = "Rozmiar strony (domyślna wartość 10)") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,
             @ApiParam(value = "Szukany tekst w artykułach") @Valid @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
-        com.dwalczak.newsreader.model.ArticleList articles = newsService.findArticles(
+        com.dwalczak.newsreader.service.dto.ArticleList articles = newsService.findArticles(
                 ArticleFilterMapper.map(country, category, pageNumber, pageSize, searchPhrase));
         return ResponseEntity.ok(ArticleMapper.map(country, category, articles));
     }

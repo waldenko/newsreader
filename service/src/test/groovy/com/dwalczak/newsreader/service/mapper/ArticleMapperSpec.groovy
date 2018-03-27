@@ -1,7 +1,7 @@
 package com.dwalczak.newsreader.service.mapper
 
-import com.dwalczak.newsreader.model.Article
-import com.dwalczak.newsreader.model.ArticleList
+import com.dwalczak.newsreader.service.dto.Article
+import com.dwalczak.newsreader.service.dto.ArticleList
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticle
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticlesResult
 import com.dwalczak.newsreader.newsapi.dto.NewsApiSource
