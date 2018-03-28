@@ -1,28 +1,35 @@
 # Budowanie, uruchomienie i testowanie
 
-* Budowanie i testy jednostkowe
+### Budowanie i testy jednostkowe
 
-```./gradlew build```
+```
+./gradlew build
+```
 
-* Uruchomienie SpringBoot
+### Uruchomienie SpringBoot
 
-```./gradlew bootRun -Dnewsapi_org_api_key=API_KEY```
-
+```
+./gradlew bootRun -Dnewsapi_org_api_key=API_KEY
+```
 W przeglądarce wejść na stronę: http://localhost:8080
 
 Aby (z uruchomionym SpringBoot'em) był podmieniany dynamicznie kod frontend'u należy także uruchomić:
-
-```./gradlew buildClientWatch```
-
+```
+./gradlew buildClientWatch
+```
 Wówcza, żeby przeglądarka zaczytała zmiany należy odświeżyć stronę.
 
-* Uruchomienie SpringBoot (bez generowania frontend'u)
+### Uruchomienie SpringBoot (bez generowania frontend'u)
 
-```./gradlew bootRun -Dnewsapi_org_api_key=API_KEY -PdisableFrontendDev```
+```
+./gradlew bootRun -Dnewsapi_org_api_key=API_KEY -PdisableFrontendDev
+```
 
-* Uruchomienie testów integracyjnych (SpringBoot)
+### Uruchomienie testów integracyjnych (SpringBoot)
 
-```./gradlew integrationTest```
+```
+./gradlew integrationTest
+```
 
 # Dokumentacja usług
 Po uruchomieniu projektu należy w przeglądarce wejść:
@@ -30,14 +37,22 @@ http://localhost:8080/swagger-ui.html
 
 # Docker
 Obraz i kontener mają nazwę newsreader-dwalczak
-* Utworzenie obrazu docker
-```./gradlew dockerBuildImage```
-* Utworzenie obrazu docker i uruchomienie kontenera
-```./gradlew dockerRun -Dnewsapi_org_api_key=API_KEY```
-* Podgląd logów aplikacji w kontenerze
-```docker logs --tail=10 -f newsreader-dwalczak```
-* Usunięcie obrazu docker
-```./gradlew dockerRemoveImage```
+### Utworzenie obrazu docker
+```
+./gradlew dockerBuildImage
+```
+### Utworzenie obrazu docker i uruchomienie kontenera
+```
+./gradlew dockerRun -Dnewsapi_org_api_key=API_KEY
+```
+### Podgląd logów aplikacji w kontenerze
+```
+docker logs --tail=10 -f newsreader-dwalczak
+```
+### Usunięcie obrazu docker
+```
+./gradlew dockerRemoveImage
+```
 
 
 # Podział kodów
