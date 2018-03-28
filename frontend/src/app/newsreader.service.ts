@@ -7,7 +7,11 @@ export class NewsreaderService {
 
   constructor(private http: HttpClient) { }
 
-  getNews(pageNumber: number) {
-    return this.http.get<ArticleList>('news/pl/technology?pageNumber=' + pageNumber);
+  getNews(category: string, pageNumber: number) {
+    return this.http.get<ArticleList>('news/pl/' + category + '?pageNumber=' + pageNumber);
+  }
+
+  getCategories() {
+    return this.http.get<Array<string>>('categories');
   }
 }

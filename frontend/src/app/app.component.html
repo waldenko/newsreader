@@ -4,6 +4,13 @@
   </h1>
 </div>
 <h2>Wiadomości: </h2>
+Kategoria:
+<select #selectElem (change)="setNewCategory(selectElem.value)">
+  <option *ngFor="let category of categories" [value]="category" [selected]="category === selectedCategory">
+    {{category}}
+  </option>
+</select>
+
 <ul class="article-list">
   <li *ngFor="let article of articles">
     <div class="article-item">
