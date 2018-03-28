@@ -14,6 +14,10 @@ class NewsClient {
         doGet("news/$country/$category", params)
     }
 
+    def static getCategories() {
+        doGet("categories")
+    }
+
     def static doGet(def path, Map query = [:]) {
         println "HTTP REQUEST: ${client.uri}$path"
         def resp = client.get(path: path, query: query)

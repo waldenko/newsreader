@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -44,12 +45,16 @@ public class NewsApiController implements NewsApi {
     @Override
     public ResponseEntity<ArticleList> listArticle(
             @ApiParam(value = "Kod kraju",required=true) @PathVariable("country") String country,
-            @ApiParam(value = "Kod kategorii",required=true) @PathVariable("category") String category,
+            @ApiParam(value = "Kod kategorii (business, entertainment, general, health, science, sports, technology)",required=true) @PathVariable("category") String category,
             @ApiParam(value = "Nr strony (domyślna wartość 1)") @Valid @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
             @ApiParam(value = "Rozmiar strony (domyślna wartość 10)") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,
             @ApiParam(value = "Szukany tekst w artykułach") @Valid @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
         com.dwalczak.newsreader.service.dto.ArticleList articles = newsService.findArticles(
                 ArticleFilterMapper.map(country, category, pageNumber, pageSize, searchPhrase));
         return ResponseEntity.ok(ArticleMapper.map(country, category, articles));
+    }
+
+    @Override public ResponseEntity<List<String>> listCategory() {
+        return ResponseEntity.ok(newsService.getCategories());
     }
 }

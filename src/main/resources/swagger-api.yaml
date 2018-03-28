@@ -30,7 +30,7 @@ paths:
         type: string
       - name: category
         in: path
-        description: Kod kategorii
+        description: Kod kategorii (business, entertainment, general, health, science, sports, technology)
         required: true
         type: string
       - name: pageNumber
@@ -53,6 +53,25 @@ paths:
           description: Lista wiadomości
           schema:
             $ref: '#/definitions/ArticleList'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /categories:
+    get:
+      operationId: listCategory
+      tags:
+       - news
+      summary: Pobierz listę dostępnych kategorii
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Lista katogorii
+          schema:
+            type: array
+            items:
+              type: string
         default:
           description: unexpected error
           schema:

@@ -13,14 +13,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Api(value = "News", description = "the News API")
@@ -47,11 +54,35 @@ public interface NewsApi {
     @RequestMapping(value = "/news/{country}/{category}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<ArticleList> listArticle(@ApiParam(value = "Kod kraju",required=true) @PathVariable("country") String country,@ApiParam(value = "Kod kategorii",required=true) @PathVariable("category") String category,@ApiParam(value = "Nr strony (domyślna wartość 1)") @Valid @RequestParam(value = "pageNumber", required = false) Integer pageNumber,@ApiParam(value = "Rozmiar strony (domyślna wartość 10)") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,@ApiParam(value = "Szukany tekst w artykułach") @Valid @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
+    default ResponseEntity<ArticleList> listArticle(@ApiParam(value = "Kod kraju",required=true) @PathVariable("country") String country,@ApiParam(value = "Kod kategorii (business, entertainment, general, health, science, sports, technology)",required=true) @PathVariable("category") String category,@ApiParam(value = "Nr strony (domyślna wartość 1)") @Valid @RequestParam(value = "pageNumber", required = false) Integer pageNumber,@ApiParam(value = "Rozmiar strony (domyślna wartość 10)") @Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,@ApiParam(value = "Szukany tekst w artykułach") @Valid @RequestParam(value = "searchPhrase", required = false) String searchPhrase) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
                     return new ResponseEntity<>(getObjectMapper().get().readValue("{  \"country\" : \"country\",  \"category\" : \"category\",  \"totalCount\" : 0,  \"articles\" : [ {    \"date\" : \"2000-01-23\",    \"author\" : \"author\",    \"imageUrl\" : \"imageUrl\",    \"description\" : \"description\",    \"sourceName\" : \"sourceName\",    \"title\" : \"title\",    \"articleUrl\" : \"articleUrl\"  }, {    \"date\" : \"2000-01-23\",    \"author\" : \"author\",    \"imageUrl\" : \"imageUrl\",    \"description\" : \"description\",    \"sourceName\" : \"sourceName\",    \"title\" : \"title\",    \"articleUrl\" : \"articleUrl\"  } ]}", ArticleList.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default NewsApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+
+    @ApiOperation(value = "Pobierz listę dostępnych kategorii", nickname = "listCategory", notes = "", response = String.class, responseContainer = "List", tags={ "news", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Lista katogorii", response = String.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "unexpected error", response = Error.class) })
+    @RequestMapping(value = "/categories",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<List<String>> listCategory() {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ \"\", \"\" ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
