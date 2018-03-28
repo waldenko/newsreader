@@ -69,6 +69,8 @@ project('service') {
     dependencies {
         compile project(':adapter-newsapi')
         compile 'javax.validation:validation-api'
+        testCompile 'cglib:cglib-nodep:3.2.6'
+        testCompile 'org.objenesis:objenesis:2.6'
     }
 }
 

@@ -35,8 +35,8 @@ class NewsInvalidRequestSpec extends Specification {
         where:
 
         param            | field        | message
-        [country: 'X']   | 'country'    | 'Country must equal \'pl\''
-        [category: 'X']  | 'category'   | 'Category must equal \'technology\''
+        [country: 'X']   | 'country'    | 'Country must be equal \'pl\''
+        [category: 'X']  | 'category'   | 'Category must be one of value: [business, entertainment, general, health, science, sports, technology]'
         [pageNumber: -1] | 'pageNumber' | 'PageNumber must be greater than 0'
         [pageSize: -1]   | 'pageSize'   | 'PageSize must be greater than 0'
     }
