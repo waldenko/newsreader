@@ -3,13 +3,23 @@
     Przeglądarka wiadomości z <a target="_blank" rel="noopener" href="https://newsapi.org">newsapi.org</a>
   </h1>
 </div>
-<h2>Wiadomości: </h2>
-Kategoria:
-<select #selectElem (change)="setNewCategory(selectElem.value)">
-  <option *ngFor="let category of categories" [value]="category" [selected]="category === selectedCategory">
-    {{category}}
-  </option>
-</select>
+<h2>Kryteria wyszukiwania: </h2>
+<form>
+  <p>
+    Kategoria:
+    <select #selectElem (change)="setCategory(selectElem.value)">
+      <option *ngFor="let category of categories" [value]="category" [selected]="category === selectedCategory">
+        {{category}}
+      </option>
+    </select>
+  </p>
+  <p>
+    <input type="text" placeholder="Wpisz szukaną treść" [(ngModel)]="searchPhrase" name="searchPhrase"/>
+    <button (click)="resetResult()">Filtruj</button>
+  </p>
+</form>
+
+<h2>Znalezione wiadomości: </h2>
 
 <ul class="article-list">
   <li *ngFor="let article of articles">
@@ -20,9 +30,11 @@ Kategoria:
         <img *ngIf="article.imageUrl != null" src="{{article.imageUrl}}"/>
         {{article.description}}
       </div>
-      <div class="article-footer">{{article.date}} - <a target="_blank" rel="noopener" href="{{article.articleUrl}}">{{article.sourceName}}</a></div>
+      <div class="article-footer">{{article.date}} - <a target="_blank" rel="noopener" href="{{article.articleUrl}}">{{article.sourceName}}</a>
+      </div>
     </div>
   </li>
 </ul>
 
-<div class="toolbar">Wyświetlono {{articles.length}} z {{totalCount}} <b *ngIf="getHasMore()" (click)="loadNextPage()">Pobierz więcej</b></div>
+<div class="toolbar">Wyświetlono {{articles.length}} z {{totalCount}} <b *ngIf="getHasMore()" (click)="loadNextPage()">Pobierz
+  więcej</b></div>
