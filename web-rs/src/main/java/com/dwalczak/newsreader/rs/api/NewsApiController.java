@@ -1,8 +1,11 @@
 package com.dwalczak.newsreader.rs.api;
 
+import com.dwalczak.newsreader.rs.dto.ArticleSource;
 import com.dwalczak.newsreader.rs.mapper.ArticleFilterMapper;
 import com.dwalczak.newsreader.rs.mapper.ArticleMapper;
 import com.dwalczak.newsreader.rs.dto.ArticleList;
+import com.dwalczak.newsreader.rs.mapper.ArticleSourceFilterMapper;
+import com.dwalczak.newsreader.rs.mapper.ArticleSourceMapper;
 import com.dwalczak.newsreader.service.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
@@ -56,5 +59,11 @@ public class NewsApiController implements NewsApi {
 
     @Override public ResponseEntity<List<String>> listCategory() {
         return ResponseEntity.ok(newsService.getCategories());
+    }
+
+    @Override public ResponseEntity<List<ArticleSource>> listSource(
+            @ApiParam(value = "Kod kraju",required=true) @PathVariable("country") String country,
+            @ApiParam(value = "Kod kategorii (business, entertainment, general, health, science, sports, technology)",required=true) @PathVariable("category") String category) {
+        return ResponseEntity.ok(ArticleSourceMapper.map(newsService.getSources(ArticleSourceFilterMapper.map(country, category))));
     }
 }

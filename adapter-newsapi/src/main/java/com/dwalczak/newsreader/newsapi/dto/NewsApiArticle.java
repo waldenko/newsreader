@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 @Data @Accessors(chain = true) @NoArgsConstructor
 public class NewsApiArticle {
-    @Nullable private NewsApiSource source;
+    @Nullable private NewsApiSourceShort source;
     @Nullable private String author;
     @Nullable private String title;
     @Nullable private String description;

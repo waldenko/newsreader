@@ -3,13 +3,20 @@ package com.dwalczak.newsreader.service;
 import com.dwalczak.newsreader.newsapi.NewsapiClient;
 import com.dwalczak.newsreader.newsapi.NewsapiException;
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticlesResult;
+import com.dwalczak.newsreader.newsapi.dto.NewsApiSourcesResult;
 import com.dwalczak.newsreader.service.dto.ArticleFilter;
 import com.dwalczak.newsreader.service.dto.ArticleList;
+import com.dwalczak.newsreader.service.dto.ArticleSource;
+import com.dwalczak.newsreader.service.dto.ArticleSourceFilter;
 import com.dwalczak.newsreader.service.mapper.ArticleFilterMapper;
 import com.dwalczak.newsreader.service.mapper.ArticleMapper;
+import com.dwalczak.newsreader.service.mapper.ArticleSourceFilterMapper;
+import com.dwalczak.newsreader.service.mapper.ArticleSourceMapper;
 import com.dwalczak.newsreader.service.validator.IsCorrectArticleFilter;
+import com.dwalczak.newsreader.service.validator.IsCorrectArticleSourceFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -48,5 +55,18 @@ public class NewsService {
     @Nonnull
     public List<String> getCategories() {
         return CATEGORIES;
+    }
+
+    @Cacheable("sources")
+    @Nonnull
+    public List<ArticleSource> getSources(@IsCorrectArticleSourceFilter ArticleSourceFilter filter) {
+        NewsApiSourcesResult res = newsapiClient.getSources(ArticleSourceFilterMapper.map(filter));
+        try {
+            return ArticleSourceMapper.map(res);
+        } catch (Exception e) {
+            log.error("Can't prepare source list", e);
+            throw new NewsServiceException(e);
+        }
+
     }
 }

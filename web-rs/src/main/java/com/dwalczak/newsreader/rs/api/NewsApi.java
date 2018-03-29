@@ -6,6 +6,7 @@
 package com.dwalczak.newsreader.rs.api;
 
 import com.dwalczak.newsreader.rs.dto.ArticleList;
+import com.dwalczak.newsreader.rs.dto.ArticleSource;
 import com.dwalczak.newsreader.rs.dto.Error;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
@@ -83,6 +84,30 @@ public interface NewsApi {
             if (getAcceptHeader().get().contains("application/json")) {
                 try {
                     return new ResponseEntity<>(getObjectMapper().get().readValue("[ \"\", \"\" ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                } catch (IOException e) {
+                    log.error("Couldn't serialize response for content type application/json", e);
+                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            }
+        } else {
+            log.warn("ObjectMapper or HttpServletRequest not configured in default NewsApi interface so no example is generated");
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+
+    @ApiOperation(value = "Pobierz listę dostępnych źródeł artykułów", nickname = "listSource", notes = "", response = ArticleSource.class, responseContainer = "List", tags={ "news", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Lista źródeł artykułów", response = ArticleSource.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "unexpected error", response = Error.class) })
+    @RequestMapping(value = "/sources/{country}/{category}",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<List<ArticleSource>> listSource(@ApiParam(value = "Kod kraju",required=true) @PathVariable("country") String country,@ApiParam(value = "Kod kategorii (business, entertainment, general, health, science, sports, technology)",required=true) @PathVariable("category") String category) {
+        if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
+            if (getAcceptHeader().get().contains("application/json")) {
+                try {
+                    return new ResponseEntity<>(getObjectMapper().get().readValue("[ {  \"name\" : \"name\",  \"id\" : \"id\"}, {  \"name\" : \"name\",  \"id\" : \"id\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
                 } catch (IOException e) {
                     log.error("Couldn't serialize response for content type application/json", e);
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

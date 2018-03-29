@@ -1,5 +1,6 @@
 package com.dwalczak.newsreader.newsapi;
 
+import com.dwalczak.newsreader.newsapi.dto.NewsApiSourcesRequest;
 import com.dwalczak.newsreader.newsapi.dto.NewsApiTopHeadlinesRequest;
 
 import javax.annotation.Nullable;
@@ -19,6 +20,15 @@ public class RequestMapper {
         addParam(buf, "q", request.getQ());
         addParam(buf, "page", fromInteger(request.getPage()));
         addParam(buf, "pageSize", fromInteger(request.getPageSize()));
+        return baseUrl + buf.toString();
+    }
+
+    public static String map(String baseUrl, String apiKey, NewsApiSourcesRequest request) {
+        StringBuilder buf = new StringBuilder();
+        addParam(buf, "apiKey", apiKey);
+        addParam(buf, "category", request.getCategory());
+        addParam(buf, "country", request.getCountry());
+        addParam(buf, "language", request.getLanguage());
         return baseUrl + buf.toString();
     }
 

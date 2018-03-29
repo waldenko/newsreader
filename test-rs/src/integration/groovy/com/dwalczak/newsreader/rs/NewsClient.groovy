@@ -18,6 +18,12 @@ class NewsClient {
         doGet("categories")
     }
 
+    def static getSources(Map params = [:]) {
+        def country = params.country ?: 'pl'
+        def category = params.category ?: 'technology'
+        doGet("sources/$country/$category")
+    }
+
     def static doGet(def path, Map query = [:]) {
         println "HTTP REQUEST: ${client.uri}$path"
         def resp = client.get(path: path, query: query)

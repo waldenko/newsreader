@@ -7,13 +7,8 @@ import lombok.experimental.Accessors;
 import javax.annotation.Nullable;
 
 @Data @Accessors(chain = true) @NoArgsConstructor
-public class NewsApiSource {
-    @Nullable private String id;
-    @Nullable private String name;
-    @Nullable private String url;
-    @Nullable private String description;
+public class NewsApiSourcesRequest {
+    @Nullable private String country;
     @Nullable private String category;
     @Nullable private String language;
-    @Nullable private String country;
-
 }

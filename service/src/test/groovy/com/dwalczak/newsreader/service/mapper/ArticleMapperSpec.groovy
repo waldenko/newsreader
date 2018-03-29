@@ -4,7 +4,7 @@ import com.dwalczak.newsreader.service.dto.Article
 import com.dwalczak.newsreader.service.dto.ArticleList
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticle
 import com.dwalczak.newsreader.newsapi.dto.NewsApiArticlesResult
-import com.dwalczak.newsreader.newsapi.dto.NewsApiSource
+import com.dwalczak.newsreader.newsapi.dto.NewsApiSourceShort
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -58,7 +58,7 @@ class ArticleMapperSpec extends Specification {
                 url: url,
                 title: title,
                 description: description,
-                source: new NewsApiSource(name: sourceName),
+                source: new NewsApiSourceShort(name: sourceName),
                 urlToImage: imageUrl,
                 publishedAt: date
         )

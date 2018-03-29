@@ -76,6 +76,36 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /sources/{country}/{category}:
+    get:
+      operationId: listSource
+      tags:
+       - news
+      summary: Pobierz listę dostępnych źródeł artykułów
+      produces:
+        - application/json
+      parameters:
+      - name: country
+        in: path
+        description: Kod kraju
+        required: true
+        type: string
+      - name: category
+        in: path
+        description: Kod kategorii (business, entertainment, general, health, science, sports, technology)
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Lista źródeł artykułów
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ArticleSource"
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Article:
     required:
@@ -114,6 +144,15 @@ definitions:
           $ref: '#/definitions/Article'
       totalCount:
         type: integer
+  ArticleSource:
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+      name:
+        type: string
   Error:
     required:
       - errorCode
